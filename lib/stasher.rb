@@ -113,7 +113,11 @@ module Stasher
           '@tags' => tags,
           '@message' => msg,
           '@source' => Stasher.source)
-        self.logger << event.to_json + "\n"
+        if self.logger.kind_of?(LogStashLogger::Logger)
+            self.logger << event
+        else
+            self.logger << event.to_json + "\n"
+        end
       end
     end
 
